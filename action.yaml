@@ -1,4 +1,4 @@
-name: 'checksum-action'
+name: 'checksum-files-action'
 description: 'Generate checksums (SHA256) for multiple files'
 branding:
   icon: 'activity'
@@ -11,6 +11,10 @@ inputs:
     description: 'Suffix for the checksum files'
     required: false
     default: 'checksum'
+  subfolder:
+    description: 'Subfolder to put the checksum files'
+    required: false
+    default: ''
 
 runs:
   using: 'docker'
