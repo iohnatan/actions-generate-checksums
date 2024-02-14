@@ -22,3 +22,4 @@ runs:
   args:
     - '${{ inputs.pattern }}'
     - '${{ inputs.suffix }}'
+    - '${{ inputs.subfolder }}'
