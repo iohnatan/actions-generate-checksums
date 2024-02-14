@@ -1,4 +1,4 @@
-name: 'checksum-files-action'
+name: 'iohna-checksum-files-action'
 description: 'Generate checksums (SHA256) for multiple files'
 branding:
   icon: 'activity'
