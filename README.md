@@ -22,6 +22,10 @@ This would match all `.txt` files in the repository.
 
 For example, given a file `example.txt`, if the suffix is set to `checksum`, the generated checksum file will be `example.txt.checksum`.
 
+### `subfolder`
+
+**Optional** The subfolder where generated checksum files will be put. Default is `` (same folder).
+
 ## Example Usage
 
 Here's a basic example that demonstrates how to use `checksum-action` in a workflow:
@@ -49,6 +53,7 @@ jobs:
         with:
           pattern: "<your folder>/*.txt"
           suffix: "checksum"
+          subfolder: "checksums"
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -61,7 +66,7 @@ This workflow will be triggered on a push to the `main` branch. It will:
 1. Checkout the repository
 2. Generate SHA256 checksums for all `.txt` files in the repository
 3. Append `.checksum` to the generated checksum files.
-4. You would see `<your folder>/<file>.txt.checksum` in your repository.
+4. You would see `<your folder>/checksums/<file>.txt.checksum` in your repository.
 
 ## Docker Container
 
