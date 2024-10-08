@@ -4,7 +4,7 @@ branding:
   icon: 'activity'
   color: 'black'
 inputs:
-  pattern: 
+  pattern:
     description: 'Pattern to search for files (glob)'
     required: true
   suffix:

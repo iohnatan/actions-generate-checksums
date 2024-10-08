@@ -4,26 +4,33 @@ import glob
 import argparse
 
 
-def compute_checksum(file_path: str):
+def compute_checksum( file_path: str ):
     sha256_hash = hashlib.sha256()
-    with open(file_path, "rb") as f:
-        for byte_block in iter(lambda: f.read(4096), b""):
-            sha256_hash.update(byte_block)
+    with open( file_path, "rb" ) as f:
+        for byte_block in iter( lambda: f.read( 4096 ), b"" ):
+            sha256_hash.update( byte_block )
     return sha256_hash.hexdigest()
 
 
-def main(pattern: str, suffix: str, subfolder: str):
-    for filename in glob.glob(pattern):
-        parent, base = os.path.split(filename)
-        checksum = compute_checksum(filename)
+def main( pattern: str, suffix: str, subfolder: str ):
+    for filepath in glob.glob( pattern, recursive=True ):
+        parent_path, basename = os.path.split( filepath )
+        file_extension        = os.path.splitext( filepath )[1]
 
-        parent = os.path.join(parent, subfolder)
-        if not os.path.exists(parent):
-             os.mkdir(parent)
-        elif not os.path.isdir(parent):
-             raise Exception("Subfolder already exist but is not a folder.")
-        
-        with open(os.path.join(parent, f"{base}.{suffix}"), "w") as f:
+        if ( os.path.isdir( filepath ) or # skip folders.
+             file_extension == suffix     # skip checksum files.
+        ):
+            continue
+
+        checksum = compute_checksum( filepath )
+
+        subfolder_path = os.path.join( parent_path, subfolder )
+        if not os.path.exists( subfolder_path ):
+             os.mkdir( subfolder_path )
+        elif not os.path.isdir( subfolder_path ):
+             raise Exception( "Subfolder already exist but is not a folder." )
+
+        with open( os.path.join( subfolder_path, f"{basename}.{suffix}" ), "w" ) as f:
             f.write(checksum)
 
 
@@ -42,4 +49,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    main(pattern=args.pattern, suffix=args.suffix, subfolder=args.subfolder)
+    main( pattern=args.pattern, suffix=args.suffix, subfolder=args.subfolder )
