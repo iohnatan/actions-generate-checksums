@@ -17,6 +17,7 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
     for file_path in glob.glob( pattern, recursive=True ):
         print( f"file_path: {file_path}" )
         print( f"isdir: " + str( os.path.isdir( file_path ) )  )
+        print( f"isfile: " + str( os.path.isfile( file_path ) )  )
 
         file_path_norm = os.path.normpath( file_path )
         print( f"file_path_norm: " + str( file_path_norm ) )
@@ -42,7 +43,8 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         shutil.rmtree( os.path.join( subfolder_path, subfolder ), True )
 
              # skip folders.
-        if ( os.path.isdir( os.path.normpath( file_path ) ) or
+        if ( os.path.isdir( file_path ) or
+             not os.path.isfile( file_path ) or
              # skip checksum files (file_extension comes with a dot).
              file_extension == f".{checksum_extension}" or
              file_path in paths_ignore
