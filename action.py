@@ -39,6 +39,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Generate checksums for multiple files"
     )
+
+    #### Same arguments must be also present on the "action.yaml" file.
     parser.add_argument(
         "--pattern", required=True, help="Pattern to search for files (glob)"
     )
