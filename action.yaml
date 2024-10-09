@@ -7,8 +7,8 @@ inputs:
   pattern:
     description: 'Pattern to search for files (glob)'
     required: true
-  suffix:
-    description: 'Suffix for the checksum files'
+  checksum_extension:
+    description: 'Checksum extension'
     required: false
   subfolder:
     description: 'Subfolder to put the checksum files'

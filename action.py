@@ -12,13 +12,13 @@ def compute_checksum( file_path: str ):
     return sha256_hash.hexdigest()
 
 
-def main( pattern: str, suffix: str, subfolder: str, paths_ignore: list[str] ):
+def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: list[str] ):
     for filepath in glob.glob( pattern, recursive=True ):
         parent_path, basename = os.path.split( filepath )
         file_extension        = os.path.splitext( filepath )[1]
 
         if ( os.path.isdir( filepath ) or # skip folders.
-             file_extension == ".{suffix}"  or # skip checksum files.
+             file_extension == ".{checksum_extension}"  or # skip checksum files.
              filepath in paths_ignore
         ):
             continue
@@ -31,7 +31,7 @@ def main( pattern: str, suffix: str, subfolder: str, paths_ignore: list[str] ):
         elif not os.path.isdir( subfolder_path ):
              raise Exception( "Subfolder already exist but is not a folder." )
 
-        with open( os.path.join( subfolder_path, f"{basename}.{suffix}" ), "w" ) as f:
+        with open( os.path.join( subfolder_path, f"{basename}.{checksum_extension}" ), "w" ) as f:
             f.write( checksum )
 
 
@@ -47,9 +47,9 @@ if __name__ == "__main__":
         help="Pattern to search for files (glob)"
     )
     parser.add_argument(
-        "--suffix",
+        "--checksum_extension",
         default="checksum",
-        help="Suffix for the checksum files"
+        help="Checksum extension"
     )
     parser.add_argument(
         "--subfolder",
@@ -65,4 +65,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    main( pattern=args.pattern, suffix=args.suffix, subfolder=args.subfolder, paths_ignore=args.paths_ignore )
+    main( pattern=args.pattern, checksum_extension=args.checksum_extension, subfolder=args.subfolder, paths_ignore=args.paths_ignore )
