@@ -18,7 +18,8 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         file_extension        = os.path.splitext( filepath )[1]
 
         if ( os.path.isdir( filepath ) or # skip folders.
-             file_extension == ".{checksum_extension}"  or # skip checksum files.
+             # skip checksum files (file_extension comes with a dot).
+             file_extension == ".{checksum_extension}" or
              filepath in paths_ignore
         ):
             continue
