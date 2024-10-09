@@ -10,15 +10,12 @@ inputs:
   suffix:
     description: 'Suffix for the checksum files'
     required: false
-    default: 'checksum'
   subfolder:
     description: 'Subfolder to put the checksum files'
     required: false
-    default: ''
   paths_ignore:
     description: 'Paths to ignore'
     required: false
-    default: ''
 
 runs:
   using: 'docker'

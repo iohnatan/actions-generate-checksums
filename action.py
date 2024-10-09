@@ -42,16 +42,26 @@ if __name__ == "__main__":
 
     #### Same arguments must be also present on the "action.yaml" file.
     parser.add_argument(
-        "--pattern", required=True, help="Pattern to search for files (glob)"
+        "--pattern",
+        required=True,
+        help="Pattern to search for files (glob)"
     )
     parser.add_argument(
-        "--suffix", default="checksum", help="Suffix for the checksum files"
+        "--suffix",
+        default="checksum",
+        help="Suffix for the checksum files"
     )
     parser.add_argument(
-        "--subfolder", required=False, help="Subfolder to put the checksum files"
+        "--subfolder",
+        required=False,
+        default="checksums__",
+        help="Subfolder to put the checksum files"
     )
     parser.add_argument(
-        "--paths_ignore", required=False, default=[], help="Paths to ignore"
+        "--paths_ignore",
+        required=False,
+        default=[],
+        help="Paths to ignore"
     )
 
     args = parser.parse_args()
