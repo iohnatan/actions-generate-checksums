@@ -24,10 +24,6 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
         shutil.rmtree( os.path.join( subfolder_path, subfolder ), True )
 
-        print( "asdf" )
-        print( f"file_path: {file_path}" )
-        print( f"isdir: " + os.path.isdir( file_path ) )
-
              # skip folders.
         if ( os.path.isdir( os.path.realpath( file_path ) ) or
              # skip checksum files (file_extension comes with a dot).
@@ -35,6 +31,10 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
              file_path in paths_ignore
         ):
             continue
+
+        print( f"file_path: {file_path}" )
+        print( f"file_extension: {checksum_extension}" )
+        print( f"isdir: " + str( os.path.isdir( file_path ) ) )
 
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
