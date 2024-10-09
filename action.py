@@ -15,10 +15,20 @@ def compute_checksum( file_path: str ):
 
 def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: list[str] ):
     for file_path in glob.glob( pattern, recursive=True ):
+        print( f"file_path: {file_path}" )
+        file_path_norm = os.path.normpath( file_path )
+        print( f"file_path_norm: " + str( file_path_norm ) )
+        print( f"isdir: " + str( os.path.isdir( file_path ) ) + "/" )
+        print( f"isdir_norm: " + str( os.path.isdir( file_path_norm ) ) )
+
         parent_path, basename = os.path.split( file_path )
         file_extension        = os.path.splitext( file_path )[1]
 
         subfolder_path = os.path.join( parent_path, subfolder )
+
+        print( f"parent_path: {parent_path}" )
+        print( f"basename: {basename}" )
+        print( f"file_extension: {file_extension}" )
 
         # on previous version of this github action there was an error that generate
         # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
@@ -31,14 +41,6 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
              file_path in paths_ignore
         ):
             continue
-
-        file_path_norm = os.path.normpath( file_path )
-
-        print( f"file_path: {file_path}" )
-        print( f"file_path_norm:" + str( file_path_norm ) )
-        print( f"file_extension: {file_extension}" )
-        print( f"isdir: " + str( os.path.isdir( file_path ) ) )
-        print( f"isdir_norm: " + str( os.path.isdir( file_path_norm ) ) )
 
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
