@@ -25,16 +25,20 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         shutil.rmtree( os.path.join( subfolder_path, subfolder ), True )
 
              # skip folders.
-        if ( os.path.isdir( os.path.realpath( file_path ) ) or
+        if ( os.path.isdir( os.path.normpath( file_path ) ) or
              # skip checksum files (file_extension comes with a dot).
              file_extension == f".{checksum_extension}" or
              file_path in paths_ignore
         ):
             continue
 
+        file_path_norm = os.path.normpath( file_path )
+
         print( f"file_path: {file_path}" )
-        print( f"file_extension: {checksum_extension}" )
+        print( f"file_path_norm:" + str( file_path_norm ) )
+        print( f"file_extension: {file_extension}" )
         print( f"isdir: " + str( os.path.isdir( file_path ) ) )
+        print( f"isdir_norm: " + str( os.path.isdir( file_path_norm ) ) )
 
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
