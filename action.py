@@ -31,7 +31,7 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
 
         # on previous version of this github action there was an error that generate
         # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
-        shutil.rmtree( os.path.join( subfolder_path, subfolder ) )
+        shutil.rmtree( os.path.join( subfolder_path, subfolder ), True )
 
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
