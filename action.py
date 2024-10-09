@@ -14,18 +14,9 @@ def compute_checksum( file_path: str ):
 
 
 def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: list[str] ):
-    for filepath in glob.glob( pattern, recursive=True ):
-        parent_path, basename = os.path.split( filepath )
-        file_extension        = os.path.splitext( filepath )[1]
-
-        if ( os.path.isdir( filepath ) or # skip folders.
-             # skip checksum files (file_extension comes with a dot).
-             file_extension == ".{checksum_extension}" or
-             filepath in paths_ignore
-        ):
-            continue
-
-        checksum = compute_checksum( filepath )
+    for file_path in glob.glob( pattern, recursive=True ):
+        parent_path, basename = os.path.split( file_path )
+        file_extension        = os.path.splitext( file_path )[1]
 
         subfolder_path = os.path.join( parent_path, subfolder )
 
@@ -33,10 +24,19 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
         shutil.rmtree( os.path.join( subfolder_path, subfolder ), True )
 
+        if ( os.path.isdir( file_path ) or # skip folders.
+             # skip checksum files (file_extension comes with a dot).
+             file_extension == f".{checksum_extension}" or
+             file_path in paths_ignore
+        ):
+            continue
+
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
         elif not os.path.isdir( subfolder_path ):
              raise Exception( "Subfolder already exist but is not a folder." )
+
+        checksum = compute_checksum( file_path )
 
         with open( os.path.join( subfolder_path, f"{basename}.{checksum_extension}" ), "w" ) as f:
             f.write( checksum )
