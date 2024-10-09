@@ -15,28 +15,10 @@ def compute_checksum( file_path: str ):
 
 def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: list[str] ):
     for file_path in glob.glob( pattern, recursive=True ):
-        print( f"file_path: {file_path}" )
-        print( f"isdir: " + str( os.path.isdir( file_path ) )  )
-        print( f"isfile: " + str( os.path.isfile( file_path ) )  )
-
-        file_path_norm = os.path.normpath( file_path )
-        print( f"file_path_norm: " + str( file_path_norm ) )
-        print( f"isdir_norm: " + str( os.path.isdir( file_path_norm ) ) )
-
-        file_path_abs  = os.path.abspath( file_path )
-        print( f"file_path_abs: " + str( file_path_abs ) )
-        print( f"isdir_abs: " + str( os.path.isdir( file_path_abs ) ) )
-
-        print( f"isdir_raw: " + str( os.path.isdir( rf"{file_path}" ) )  )
-
         parent_path, basename = os.path.split( file_path )
         file_extension        = os.path.splitext( file_path )[1]
 
         subfolder_path = os.path.join( parent_path, subfolder )
-
-        print( f"parent_path: {parent_path}" )
-        print( f"basename: {basename}" )
-        print( f"file_extension: {file_extension}" )
 
         # on previous version of this github action there was an error that generate
         # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
@@ -44,6 +26,8 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
 
              # skip folders.
         if ( os.path.isdir( file_path ) or
+             # isdir() for "../__checksums/__checksums" path doesnt work, it returns false,
+             # so double validate with isfile().
              not os.path.isfile( file_path ) or
              # skip checksum files (file_extension comes with a dot).
              file_extension == f".{checksum_extension}" or
