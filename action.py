@@ -53,4 +53,4 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    main( pattern=args.pattern, suffix=args.suffix, subfolder=args.subfolder, files_ignore=args.files_ignore )
+    main( pattern=args.pattern, suffix=args.suffix, subfolder=args.subfolder, paths_ignore=args.paths_ignore )
