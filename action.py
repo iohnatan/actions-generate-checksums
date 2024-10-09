@@ -18,7 +18,7 @@ def main( pattern: str, suffix: str, subfolder: str, paths_ignore: list[str] ):
         file_extension        = os.path.splitext( filepath )[1]
 
         if ( os.path.isdir( filepath ) or # skip folders.
-             file_extension == suffix  or # skip checksum files.
+             file_extension == ".{suffix}"  or # skip checksum files.
              filepath in paths_ignore
         ):
             continue
