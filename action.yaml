@@ -22,6 +22,6 @@ runs:
   image: 'Dockerfile'
   args:
     - '${{ inputs.pattern }}'
-    - '${{ inputs.suffix }}'
+    - '${{ inputs.checksum_extension }}'
     - '${{ inputs.subfolder }}'
     - '${{ inputs.paths_ignore }}'
