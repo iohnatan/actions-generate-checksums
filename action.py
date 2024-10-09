@@ -2,6 +2,7 @@ import hashlib
 import os
 import glob
 import argparse
+import shutil
 
 
 def compute_checksum( file_path: str ):
@@ -27,6 +28,11 @@ def main( pattern: str, checksum_extension: str, subfolder: str, paths_ignore: l
         checksum = compute_checksum( filepath )
 
         subfolder_path = os.path.join( parent_path, subfolder )
+
+        # on previous version of this github action there was an error that generate
+        # checksum folders for checksum files, so delete checksum folder that are inside another checksum folder.
+        shutil.rmtree( os.path.join( subfolder_path, subfolder ) )
+
         if not os.path.exists( subfolder_path ):
              os.mkdir( subfolder_path )
         elif not os.path.isdir( subfolder_path ):
