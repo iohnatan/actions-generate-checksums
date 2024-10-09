@@ -12,14 +12,14 @@ def compute_checksum( file_path: str ):
     return sha256_hash.hexdigest()
 
 
-def main( pattern: str, suffix: str, subfolder: str, files_ignore: list[str] ):
+def main( pattern: str, suffix: str, subfolder: str, paths_ignore: list[str] ):
     for filepath in glob.glob( pattern, recursive=True ):
         parent_path, basename = os.path.split( filepath )
         file_extension        = os.path.splitext( filepath )[1]
 
         if ( os.path.isdir( filepath ) or # skip folders.
              file_extension == suffix  or # skip checksum files.
-             basename in files_ignore
+             filepath in paths_ignore
         ):
             continue
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         "--subfolder", required=False, help="Subfolder to put the checksum files"
     )
     parser.add_argument(
-        "--files_ignore", required=False, default=[], help="Files to ignore"
+        "--paths_ignore", required=False, default=[], help="Paths to ignore"
     )
 
     args = parser.parse_args()
